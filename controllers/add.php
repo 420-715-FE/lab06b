@@ -15,15 +15,6 @@ class AddController extends Controller {
     }
 
     function handlePost($get, $post) {
-        try {
-            $description = htmlspecialchars(trim($post['description']));
-            $priority = intval($post['priority']);
-            $this->taskModel->insert($description, $priority);
-        } catch (Exception $e) {
-            throw new Exception('Some POST fields are missing.');
-        }
-
-        header('Location: ?action=list');
     }
 }
 
