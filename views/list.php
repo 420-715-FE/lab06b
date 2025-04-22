@@ -22,7 +22,7 @@
 
                 foreach ($tasks as $task) {
                     echo "<tr>";
-                    echo "<td style=\"text-align:center;\"><a href=\"?action=supprimer&id={$task['id']}\">❌ </a></td>";
+                    echo "<td style=\"text-align:center;\"><a href=\"?action=delete&id={$task['id']}\">❌ </a></td>";
                     echo "<td>{$task['description']}</td>";
                     echo "<td>{$task['description_priorite']}</td>";
                     echo "</tr>";
@@ -35,7 +35,7 @@
                     <th>Ajouter une tâche:</th>
                     <td><input style="margin-right: 2px;" type="text" name="description" required></td>
                     <td>
-                        <select name="priorite" required>
+                        <select name="priority" required>
                             <option disabled selected></option>
                             <?php
                                 foreach ($priorities as $priority) {

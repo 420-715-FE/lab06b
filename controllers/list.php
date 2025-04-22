@@ -5,15 +5,21 @@ include_once(__DIR__ . '/../models/tasks.php');
 include_once(__DIR__ . '/../models/priorities.php');
 
 class ListController extends Controller {
-  function handle($get) {
-    $taskModel = new TaskModel($this->db);
-    $priorityModel = new PriorityModel($this->db);
+    private $taskModel;
+    private $priorityModel;
 
-    $tasks = $taskModel->getAll();
-    $priorities = $priorityModel->getAll();
+    public function __construct($db) {
+        parent::__construct($db);
+        $this->taskModel = new TaskModel($db);
+        $this->priorityModel = new PriorityModel($db);
+    }
 
-    include(__DIR__ . '/../views/list.php');
-  }
+    public function handle($get) {
+        $tasks = $this->taskModel->getAll();
+        $priorities = $this->priorityModel->getAll();
+
+        include(__DIR__ . '/../views/list.php');
+    }
 }
 
 ?>

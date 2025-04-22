@@ -23,7 +23,7 @@ class TaskModel {
   }
 
   function delete($id) {
-    $query = $this->db->prepare('DELETE FROM taches WHERE id = ?');
+    $query = $this->db->prepare('DELETE FROM tache WHERE id = ?');
     $query->execute([ $id ]);
   }
 }

@@ -4,51 +4,28 @@ include_once(__DIR__ . "/../controller.php");
 include_once(__DIR__ . '/../models/tasks.php');
 
 class AddController extends Controller {
-  function handle($get) {
-    include(__DIR__ . '/../views/add.php');
-  }
+    private $taskModel;
 
-  function handlePost($get, $post) {
-    if (
-      !isset($post['nom'])
-      || !isset($post['prenom'])
-      || !isset($post['adresseDom'])
-      || !isset($post['adresseTrv'])
-      || !isset($post['numeroTelDom'])
-      || !isset($post['numeroTelCel'])
-      || !isset($post['numeroTelTrv'])
-      || !isset($post['courrielPer'])
-      || !isset($post['courrielPro'])
-    ) {
-      throw new Exception('Some POST fields are missing.');
+    public function __construct($db) {
+        parent::__construct($db);
+        $this->taskModel = new TaskModel($db);
     }
 
-    $lastName = trim($post['nom']);
-    $firstName = trim($post['prenom']);
-
-    $addresses = [];
-    $addresses['DOM'] = trim($post['adresseDom']);
-    $addresses['TRV'] = trim($post['adresseTrv']);
-
-    $phoneNumbers = [];
-    $phoneNumbers['DOM'] = trim($post['numeroTelDom']);
-    $phoneNumbers['CEL'] = trim($post['numeroTelCel']);
-    $phoneNumbers['TRV'] = trim($post['numeroTelTrv']);
-
-    $emailAddresses = [];
-    $emailAddresses['PER'] = trim($post['courrielPer']);
-    $emailAddresses['PRO']= trim($post['courrielPro']);
-
-    if (empty($lastName) || empty($firstName)) {
-      exit;
+    function handle($get) {
+        include(__DIR__ . '/../views/add.php');
     }
 
-    $model = new ContactModel($this->db);
+    function handlePost($get, $post) {
+        try {
+            $description = htmlspecialchars(trim($post['description']));
+            $priority = intval($post['priority']);
+            $this->taskModel->insert($description, $priority);
+        } catch (Exception $e) {
+            throw new Exception('Some POST fields are missing.');
+        }
 
-    $id = $model->insert($firstName, $lastName, $phoneNumbers, $addresses, $emailAddresses);
-
-    header("Location: ?action=display&id=$id");
-  }
+        header('Location: ?action=list');
+    }
 }
 
 ?>
