@@ -12,7 +12,6 @@ class AddController extends Controller {
     }
 
     function handle($get) {
-        include(__DIR__ . '/../views/add.php');
     }
 
     function handlePost($get, $post) {
