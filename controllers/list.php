@@ -15,10 +15,6 @@ class ListController extends Controller {
     }
 
     public function handle($get) {
-        $tasks = $this->taskModel->getAll();
-        $priorities = $this->priorityModel->getAll();
-
-        include(__DIR__ . '/../views/list.php');
     }
 }
 
